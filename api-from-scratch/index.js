@@ -5,6 +5,7 @@ const express = require('express')
 const app = express()
 const PORT = 8080
 const OpenAI = require("openai");
+require('dotenv').config()
 
 //this is middleware that allows us to parse the request body from JSON
 app.use(express.json())
@@ -52,7 +53,7 @@ app.post('/openai', async (req, res) => {
 
     const { message } = req.body
 
-    const openai = new OpenAI({ apiKey: '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' });
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY});
 
     const messages = [
         { role: "system", content: "You are a mega quirky assistant ready to POP uses a shiot ton of EMOJIS" },
