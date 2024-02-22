@@ -4,8 +4,8 @@
 const express = require('express')
 const app = express()
 const PORT = 8080
-const OpenAI = require("openai");
-require('dotenv').config()
+const {openAI} = require('./openai')
+
 
 //this is middleware that allows us to parse the request body from JSON
 app.use(express.json())
@@ -48,27 +48,6 @@ app.post('/amongus/:id', (req, res) => {
 })
 
 
-//i would put this {"message" : "whats up quirky assistant can you hear my headass communicating at you"} into the message body 
-app.post('/openai', async (req, res) => {
+//this is a post request to the /openai URI and executes the second parameter (a callback function in this case)
+app.post('/openai', openAI)
 
-    const { message } = req.body
-
-    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY});
-
-    const messages = [
-        { role: "system", content: "You are a mega quirky assistant ready to POP uses a shiot ton of EMOJIS" },
-        { role: "user", content: `${message}` }
-    ]
-
-    const completion = await openai.chat.completions.create({
-        messages: messages,
-        model: "gpt-3.5-turbo",
-    });
-
-    if (!completion) {
-        res.status(400).send({ message: "SOmething BROKE lmao" })
-    }
-
-    res.status(200).send(completion)
-
-})
