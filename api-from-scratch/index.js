@@ -1,12 +1,10 @@
-//i am using insomnia to test the server endpoints
-
+//insomnia to test the server endpoints
 //create a server app
 const express = require('express')
 const app = express()
 const PORT = 8080
 const {openAI} = require('./openai')
-
-
+ 
 //this is middleware that allows us to parse the request body from JSON
 app.use(express.json())
 
@@ -31,19 +29,17 @@ app.get('/amongus', (res) => {
 
 //dynamic url allows us to handle large amouns of specific requests from a single url 
 // since the HTTP verb is post, then this means client is trying to create a new object 
-//request params object avails us of the info in the request payload
+//request params object avails us of the dynamic :id value in the URL
 app.post('/amongus/:id', (req, res) => {
 
     const { id } = req.params
     const { logo } = req.body
 
-
-    //save record of these things to the DB
-
     if (!logo) {
         res.status(418).send({ message: 'We need a logo!!!' })
     }
 
+    //save record of these things to the DB
     res.status(200).send({ tshirt: `👕 with your ${logo} logo and your ${id} id!!!` })
 })
 
