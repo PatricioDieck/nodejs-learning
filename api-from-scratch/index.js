@@ -3,7 +3,7 @@
 const express = require('express')
 const app = express()
 const PORT = 8080
-const {openAI} = require('./openai')
+const {openAI} = require('./src/functions/openai')
  
 //this is middleware that allows us to parse the request body from JSON
 app.use(express.json())
